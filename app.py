@@ -11,7 +11,6 @@ chat_history = get_chat_history()
 
 st.title("🌐 Local WiFi Chat Room")
 
-# 2. USER LOGIN (Private to this session)
 if "username" not in st.session_state:
     with st.form("login_form"):
         name = st.text_input("Choose a username")
@@ -19,14 +18,19 @@ if "username" not in st.session_state:
         if submit and name:
             st.session_state.username = name
             st.rerun()
-    st.stop()  # Script stops here if not logged in
+    
+    # We force the script to stop here if the username isn't set
+    st.stop() 
 
-# --- EVERYTHING BELOW THIS LINE ONLY RUNS IF LOGGED IN ---
-
-# 3. SIDEBAR CONTROLS
-st.sidebar.write(f"Logged in as: **{st.session_state.username}**")
-if st.sidebar.button("Refresh Chat"):
-    st.rerun()
+else:
+    # This block ONLY runs if the 'if' above is False
+    st.sidebar.write(f"Logged in as: **{st.session_state.username}**")
+    if st.sidebar.button("Refresh Chat"):
+        st.rerun()
+    
+    if st.sidebar.button("Logout"):
+        del st.session_state.username
+        st.rerun()
 
 # 4. CHAT DISPLAY
 st.subheader("Messages")

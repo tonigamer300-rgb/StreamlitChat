@@ -19,7 +19,9 @@ if "username" not in st.session_state:
         if submit and name:
             st.session_state.username = name
             st.rerun()
-    st.stop() # Don't show the chat until they "log in"
+    st.stop()  # Script stops here if not logged in
+
+# --- EVERYTHING BELOW THIS LINE ONLY RUNS IF LOGGED IN ---
 
 # 3. SIDEBAR CONTROLS
 st.sidebar.write(f"Logged in as: **{st.session_state.username}**")
